@@ -1,9 +1,11 @@
 package com.mmall.model;
 
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Builder
+@NoArgsConstructor
 public class SysDept {
     private Integer id;
 

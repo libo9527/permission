@@ -8,3 +8,4 @@
 
 ## Http请求前后监听-interceptor
 
+DTO是用来做适配用的。
