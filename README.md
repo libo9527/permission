@@ -66,3 +66,49 @@ DTO是用来做适配用的。
 > [后台管理模板ACE | 大牛笔记](http://www.daniubiji.cn/archives/408)
 
 Ace简介：Ace 是一个轻量、功能丰富、HTML5、响应式、支持手机及平板电脑上浏览的管理后台模板，基于CSS框架Bootstrap制作，Bootstrap版本更新至 3.0，Ace – Responsive Admin Template当前最新版！
+
+# MD5加密
+
+```java
+package com.mmall.util;
+
+import lombok.extern.slf4j.Slf4j;
+
+import java.security.MessageDigest;
+
+/**
+ * @Description：
+ * @Auther： libo
+ * @date： 2018/11/22:11:37
+ */
+@Slf4j
+public class MD5Util {
+
+    public final static String encrypt(String s){
+        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+        try {
+            byte[] btInput = s.getBytes();
+            // 获得MD5摘要算法的 MessageDigest 对象
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            // 使用指定的字节更新摘要
+            mdInst.update(btInput);
+            // 获得密文
+            byte[] md = mdInst.digest();
+            // 把密文转换成十六进制的字符串形式
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            log.error("generate md5 error, {}", s, e);
+            return null;
+        }
+    }
+}
+```
+

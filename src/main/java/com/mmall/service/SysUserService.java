@@ -59,4 +59,8 @@ public class SysUserService {
     private boolean checkTelephoneExist(String telephone, Integer id) {
         return false;
     }
+
+    public SysUser findByKeyword(String keyword) {
+        return sysUserMapper.findByKeyword(keyword);
+    }
 }
