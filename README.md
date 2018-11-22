@@ -112,3 +112,7 @@ public class MD5Util {
 }
 ```
 
+# 转发与重定向
+
+> [java.lang.IllegalStateException: Cannot forward after ... - CSDN博客](https://blog.csdn.net/lewky_liu/article/details/79845655)
+

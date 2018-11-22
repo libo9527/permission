@@ -19,7 +19,6 @@ import java.io.IOException;
  * @date： 2018/11/22:11:19
  */
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
     @Resource
@@ -52,6 +51,7 @@ public class UserController {
                 response.sendRedirect(ret);
             }else {
                 response.sendRedirect("/admin/index.page"); // TODO:
+                return;
             }
         }
 
