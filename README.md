@@ -112,7 +112,19 @@ public class MD5Util {
 }
 ```
 
-# 转发与重定向
+# Spring
+
+## 转发与重定向
 
 > [java.lang.IllegalStateException: Cannot forward after ... - CSDN博客](https://blog.csdn.net/lewky_liu/article/details/79845655)
 
+## @RequestParam
+
+> [*spring*MVC*接口*接受前端传递参数*数据类型*总结 - 平凡之..._CSDN博客](https://www.baidu.com/link?url=Q2yQl_FPZPWezMIdb2C62iRvWtWm7fM6mt6ykBRalyXdiDTci2nVa1RqijwIJZF_VOBAcFv7GL_REhI1S0SlA2YGHd5cI6INomDWlPHjVpG&wd=&eqid=ee943f76000425ae000000065bf7c508)
+>
+> [关于*@RequestParam*绑定的*数据类型* - 码农的幸福生活 - CSDN博客](https://www.baidu.com/link?url=tdwixhDqHUVmjX5ADmaKLN4YmUNgZXUlapGFpG0iWstZHMpynusraiuTSRF9MJdqbHB-jBsXgIiveJVNn0B1fNm5xZFuYoNVoayXUL_gjOW&wd=&eqid=fb036b4a00049c71000000065bf7c62f)
+
+1. @RequestParam绑定对象类型，没有问题；
+2. @RequestParam绑定基本数据类型，若required属性为true（默认为true）也没有问题；
+3. @RequestParam绑定基本数据类型，若required属性为false（默认为true），且设置了defaultValue属性，没有问题；
+4. @RequestParam绑定基本数据类型，若required属性为false（默认为true），且没有设置defaultValue属性，则当没有传该参数时，会报500（因为无法将null赋值给基本数据类型）

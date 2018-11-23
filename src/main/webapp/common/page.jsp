@@ -36,7 +36,7 @@
     Mustache.parse(paginateTemplate);
     
     function renderPage(url, total, pageNo, pageSize, currentSize, idElement, callback) {
-        var maxPageNo = Math.ceil(total / pageSize);
+        var maxPageNo = Math.ceil(total / pageSize); // ceil 向上取整
         var paramStartChar = url.indexOf("?") > 0 ? "&" : "?";
         var from = (pageNo - 1) * pageSize + 1;
         var view = {
@@ -55,7 +55,7 @@
         $("#" + idElement).html(Mustache.render(paginateTemplate, view));
 
         $(".page-action").click(function(e) {
-            e.preventDefault();
+            e.preventDefault(); // 拦截默认事件
             $("#" + idElement + " .pageNo").val($(this).attr("data-target"));
             var targetUrl  = $(this).attr("data-url");
             if(targetUrl != '') {
