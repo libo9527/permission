@@ -174,4 +174,14 @@
       operate_ip = #{operateIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="countByNameAndAclModuleId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM sys_acl
+    WHERE acl_module_id = #{aclModuleId}
+    AND name = #{name}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
 </mapper>
