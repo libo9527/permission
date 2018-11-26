@@ -56,6 +56,7 @@ public class UserController {
             request.getSession().setAttribute("user", sysUser);
             if (StringUtils.isNotBlank(ret)){
                 response.sendRedirect(ret);
+                return;
             }else {
                 response.sendRedirect("/admin/index.page"); // TODO:
                 return;
