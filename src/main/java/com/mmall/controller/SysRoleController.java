@@ -6,6 +6,7 @@ import com.mmall.service.SysRoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -28,5 +29,16 @@ public class SysRoleController {
     public JsonData updateRole(RoleParam param) {
         sysRoleService.update(param);
         return JsonData.success();
+    }
+
+    @RequestMapping("/list.json")
+    @ResponseBody
+    public JsonData list() {
+        return JsonData.success(sysRoleService.getAll());
+    }
+
+    @RequestMapping("role.page")
+    public ModelAndView page() {
+        return new ModelAndView("role");
     }
 }

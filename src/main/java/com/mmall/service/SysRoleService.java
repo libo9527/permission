@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class SysRoleService {
@@ -57,5 +58,9 @@ public class SysRoleService {
 
     private boolean checkExist(String name, Integer id) {
         return sysRoleMapper.countByName(name, id) > 0;
+    }
+
+    public List<SysRole> getAll() {
+        return sysRoleMapper.getAll();
     }
 }

@@ -134,4 +134,9 @@
       AND id != #{id}
     </if>
   </select>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_role
+  </select>
 </mapper>
