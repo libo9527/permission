@@ -1,7 +1,8 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
-import com.mmall.common.RequestHolder;
+import com.mmall.beans.PageQuery;
+import com.mmall.beans.PageResult;
 import com.mmall.dao.SysAclMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysAcl;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description：
@@ -69,5 +71,15 @@ public class SysAclService {
     private String generateCode() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         return dateFormat.format(new Date()) + "_" + (int) (Math.random() * 100);
+    }
+
+    public PageResult<SysAcl> getPageByAclModuleId(int aclModuleId, PageQuery page) {
+        BeanValidator.check(page);
+        int count = sysAclMapper.countByAclModuleId(aclModuleId);
+        if (count > 0) {
+            List<SysAcl> aclList = sysAclMapper.getPageByAclModuleId(aclModuleId, page);
+            return PageResult.<SysAcl>builder().data(aclList).total(count).build();
+        }
+        return PageResult.<SysAcl>builder().build();
     }
 }

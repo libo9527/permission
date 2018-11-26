@@ -184,4 +184,18 @@
       AND id != #{id}
     </if>
   </select>
+
+  <select id="countByAclModuleId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM sys_acl
+    WHERE acl_module_id = #{aclModuleId}
+  </select>
+
+  <select id="getPageByAclModuleId" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_acl
+    WHERE acl_module_id = #{aclModuleId}
+    ORDER BY seq ASC, name ASC -- seq相同时按name进行排序
+    limit #{page.offset}, #{page.pageSize}
+  </select>
 </mapper>
