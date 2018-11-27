@@ -51,4 +51,6 @@
     <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
         <property name="dbType" value="mysql" />
     </bean>
+
+    <import resource="redis.xml" />
 </beans>
