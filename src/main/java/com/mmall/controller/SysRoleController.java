@@ -96,4 +96,12 @@ public class SysRoleController {
         map.put("unselected", unselectedUserList);
         return JsonData.success(map);
     }
+
+    @RequestMapping("/changeUsers.json")
+    @ResponseBody
+    public JsonData changeUsers(@RequestParam("roleId") int roleId, @RequestParam(value = "userIds", required = false, defaultValue = "") String userIds) {
+        List<Integer> userIdList = StringUtil.splitToListInt(userIds);
+        sysRoleUserService.changeRoleUsers(roleId, userIdList);
+        return JsonData.success();
+    }
 }
