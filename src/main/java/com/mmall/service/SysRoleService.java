@@ -34,6 +34,9 @@ public class SysRoleService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(RoleParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getName(), param.getId())) {
@@ -49,6 +52,7 @@ public class SysRoleService {
         role.setOperateIp("127.0.0.1"); // TODO:
         role.setOperateTime(new Date());
         sysRoleMapper.insertSelective(role);
+        sysLogService.saveRoleLog(null, role);
     }
 
     public void update(RoleParam param) {
@@ -70,6 +74,7 @@ public class SysRoleService {
         after.setOperateIp("127.0.0.1"); // TODO:
         after.setOperateTime(new Date());
         sysRoleMapper.updateByPrimaryKeySelective(after);
+        sysLogService.saveRoleLog(before, after);
     }
 
     private boolean checkExist(String name, Integer id) {

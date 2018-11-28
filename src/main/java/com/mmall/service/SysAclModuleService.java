@@ -30,6 +30,9 @@ public class SysAclModuleService {
     @Resource
     private SysAclMapper sysAclMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(AclModuleParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getParentId(), param.getName(), param.getId())) {
@@ -47,6 +50,7 @@ public class SysAclModuleService {
         aclModule.setOperateIp("127.0.0.1"); // TODO:
         aclModule.setOperateTime(new Date());
         sysAclModuleMapper.insertSelective(aclModule);
+        sysLogService.saveAclModuleLog(null, aclModule);
     }
 
     public void update(AclModuleParam param) {
@@ -71,6 +75,7 @@ public class SysAclModuleService {
         after.setOperateTime(new Date());
 
         updateWithChild(before, after);
+        sysLogService.saveAclModuleLog(before, after);
     }
 
     @Transactional
@@ -109,7 +114,7 @@ public class SysAclModuleService {
     public void delete(int aclModuleId) {
         SysAclModule aclModule = sysAclModuleMapper.selectByPrimaryKey(aclModuleId);
         Preconditions.checkNotNull(aclModule, "待删除的权限模块不存在，无法删除");
-        if(sysAclModuleMapper.countByParentId(aclModule.getId()) > 0) {
+        if (sysAclModuleMapper.countByParentId(aclModule.getId()) > 0) {
             throw new ParamException("当前模块下面有子模块，无法删除");
         }
         if (sysAclMapper.countByAclModuleId(aclModule.getId()) > 0) {

@@ -27,12 +27,15 @@ public class SysUserService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(UserParam param) {
         BeanValidator.check(param);
-        if(checkTelephoneExist(param.getTelephone(), param.getId())) {
+        if (checkTelephoneExist(param.getTelephone(), param.getId())) {
             throw new ParamException("电话已被占用");
         }
-        if(checkEmailExist(param.getMail(), param.getId())) {
+        if (checkEmailExist(param.getMail(), param.getId())) {
             throw new ParamException("邮箱已被占用");
         }
 
@@ -56,14 +59,15 @@ public class SysUserService {
         // TODO: sendEmail
 
         sysUserMapper.insertSelective(user);
+        sysLogService.saveUserLog(null, user);
     }
 
     public void update(UserParam param) {
         BeanValidator.check(param);
-        if(checkTelephoneExist(param.getTelephone(), param.getId())) {
+        if (checkTelephoneExist(param.getTelephone(), param.getId())) {
             throw new ParamException("电话已被占用");
         }
-        if(checkEmailExist(param.getMail(), param.getId())) {
+        if (checkEmailExist(param.getMail(), param.getId())) {
             throw new ParamException("邮箱已被占用");
         }
         SysUser before = sysUserMapper.selectByPrimaryKey(param.getId());
@@ -81,6 +85,7 @@ public class SysUserService {
         after.setOperateIp("127.0.0.1"); // TODO:
         after.setOperateTime(new Date());
         sysUserMapper.updateByPrimaryKeySelective(after);
+        sysLogService.saveUserLog(before, after);
     }
 
     public boolean checkEmailExist(String mail, Integer userId) {

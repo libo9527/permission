@@ -30,6 +30,9 @@ public class SysDeptService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(DeptParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getParentId(), param.getName(), param.getId())) {
@@ -47,6 +50,7 @@ public class SysDeptService {
         dept.setOperateIp("127.0.0.1"); // TODO:
         dept.setOperateTime(new Date());
         sysDeptMapper.insertSelective(dept);
+        sysLogService.saveDeptLog(null, dept);
     }
 
     private boolean checkExist(Integer parentId, String deptName, Integer deptId) { // 需要deptId的原因？
@@ -84,6 +88,7 @@ public class SysDeptService {
         after.setOperateIp("127.0.0.1"); // TODO:
         after.setOperateTime(new Date());
         updateWithChild(before, after);
+        sysLogService.saveDeptLog(before, after);
     }
 
     @Transactional
@@ -112,7 +117,7 @@ public class SysDeptService {
         if (sysDeptMapper.countByParentId(dept.getId()) > 0) {
             throw new ParamException("当前部门下面有子部门，无法删除");
         }
-        if(sysUserMapper.countByDeptId(dept.getId()) > 0) {
+        if (sysUserMapper.countByDeptId(dept.getId()) > 0) {
             throw new ParamException("当前部门下面有用户，无法删除");
         }
         sysDeptMapper.deleteByPrimaryKey(deptId);
