@@ -4,12 +4,14 @@ import com.google.common.base.Preconditions;
 import com.mmall.beans.LogType;
 import com.mmall.beans.PageQuery;
 import com.mmall.beans.PageResult;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.*;
 import com.mmall.dto.SearchLogDto;
 import com.mmall.exception.ParamException;
 import com.mmall.model.*;
 import com.mmall.param.SearchLogParam;
 import com.mmall.util.BeanValidator;
+import com.mmall.util.IpUtil;
 import com.mmall.util.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
@@ -85,8 +87,8 @@ public class SysLogService {
         sysLog.setTargetId(after == null ? before.getId() : after.getId());
         sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
         sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
-        sysLog.setOperator("system"); // TODO
-        sysLog.setOperateIp("127.0.0.1");
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysLog.setOperateTime(new Date());
         sysLog.setStatus(1);
         sysLogMapper.insertSelective(sysLog);
@@ -98,8 +100,8 @@ public class SysLogService {
         sysLog.setTargetId(after == null ? before.getId() : after.getId());
         sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
         sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
-        sysLog.setOperator("system"); // TODO
-        sysLog.setOperateIp("127.0.0.1");
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysLog.setOperateTime(new Date());
         sysLog.setStatus(1);
         sysLogMapper.insertSelective(sysLog);
@@ -111,8 +113,8 @@ public class SysLogService {
         sysLog.setTargetId(after == null ? before.getId() : after.getId());
         sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
         sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
-        sysLog.setOperator("system"); // TODO
-        sysLog.setOperateIp("127.0.0.1");
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysLog.setOperateTime(new Date());
         sysLog.setStatus(1);
         sysLogMapper.insertSelective(sysLog);
@@ -124,8 +126,8 @@ public class SysLogService {
         sysLog.setTargetId(after == null ? before.getId() : after.getId());
         sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
         sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
-        sysLog.setOperator("system"); // TODO
-        sysLog.setOperateIp("127.0.0.1");
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysLog.setOperateTime(new Date());
         sysLog.setStatus(1);
         sysLogMapper.insertSelective(sysLog);
@@ -137,8 +139,8 @@ public class SysLogService {
         sysLog.setTargetId(after == null ? before.getId() : after.getId());
         sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
         sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
-        sysLog.setOperator("system"); // TODO
-        sysLog.setOperateIp("127.0.0.1");
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysLog.setOperateTime(new Date());
         sysLog.setStatus(1);
         sysLogMapper.insertSelective(sysLog);
@@ -156,8 +158,8 @@ public class SysLogService {
                 }
                 SysDept afterDept = JsonMapper.string2Obj(sysLog.getOldValue(), new TypeReference<SysDept>() {
                 });
-                afterDept.setOperator("system"); // TODO
-                afterDept.setOperateIp("127.0.0.1");
+                afterDept.setOperator(RequestHolder.getCurrentUser().getUsername());
+                afterDept.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
                 afterDept.setOperateTime(new Date());
                 sysDeptMapper.updateByPrimaryKeySelective(afterDept);
                 saveDeptLog(beforeDept, afterDept);
@@ -170,8 +172,8 @@ public class SysLogService {
                 }
                 SysUser afterUser = JsonMapper.string2Obj(sysLog.getOldValue(), new TypeReference<SysUser>() {
                 });
-                afterUser.setOperator("system"); // TODO
-                afterUser.setOperateIp("127.0.0.1");
+                afterUser.setOperator(RequestHolder.getCurrentUser().getUsername());
+                afterUser.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
                 afterUser.setOperateTime(new Date());
                 sysUserMapper.updateByPrimaryKeySelective(afterUser);
                 saveUserLog(beforeUser, afterUser);
@@ -184,8 +186,8 @@ public class SysLogService {
                 }
                 SysAclModule afterAclModule = JsonMapper.string2Obj(sysLog.getOldValue(), new TypeReference<SysAclModule>() {
                 });
-                afterAclModule.setOperator("system"); // TODO
-                afterAclModule.setOperateIp("127.0.0.1");
+                afterAclModule.setOperator(RequestHolder.getCurrentUser().getUsername());
+                afterAclModule.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
                 afterAclModule.setOperateTime(new Date());
                 sysAclModuleMapper.updateByPrimaryKeySelective(afterAclModule);
                 saveAclModuleLog(beforeAclModule, afterAclModule);
@@ -198,8 +200,8 @@ public class SysLogService {
                 }
                 SysAcl afterAcl = JsonMapper.string2Obj(sysLog.getOldValue(), new TypeReference<SysAcl>() {
                 });
-                afterAcl.setOperator("system"); // TODO
-                afterAcl.setOperateIp("127.0.0.1");
+                afterAcl.setOperator(RequestHolder.getCurrentUser().getUsername());
+                afterAcl.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
                 afterAcl.setOperateTime(new Date());
                 sysAclMapper.updateByPrimaryKeySelective(afterAcl);
                 saveAclLog(beforeAcl, afterAcl);
@@ -212,8 +214,8 @@ public class SysLogService {
                 }
                 SysRole afterRole = JsonMapper.string2Obj(sysLog.getOldValue(), new TypeReference<SysRole>() {
                 });
-                afterRole.setOperator("system"); // TODO
-                afterRole.setOperateIp("127.0.0.1");
+                afterRole.setOperator(RequestHolder.getCurrentUser().getUsername());
+                afterRole.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
                 afterRole.setOperateTime(new Date());
                 sysRoleMapper.updateByPrimaryKeySelective(afterRole);
                 saveRoleLog(beforeRole, afterRole);

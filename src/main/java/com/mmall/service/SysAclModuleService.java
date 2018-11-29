@@ -1,12 +1,14 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysAclMapper;
 import com.mmall.dao.SysAclModuleMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysAclModule;
 import com.mmall.param.AclModuleParam;
 import com.mmall.util.BeanValidator;
+import com.mmall.util.IpUtil;
 import com.mmall.util.LevelUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -46,8 +48,8 @@ public class SysAclModuleService {
                 .remark(param.getRemark())
                 .build();
         aclModule.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
-        aclModule.setOperator("system"); // TODO:
-        aclModule.setOperateIp("127.0.0.1"); // TODO:
+        aclModule.setOperator(RequestHolder.getCurrentUser().getUsername());
+        aclModule.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         aclModule.setOperateTime(new Date());
         sysAclModuleMapper.insertSelective(aclModule);
         sysLogService.saveAclModuleLog(null, aclModule);
@@ -70,8 +72,8 @@ public class SysAclModuleService {
                 .remark(param.getRemark())
                 .build();
         after.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
-        after.setOperator("system"); // TODO:
-        after.setOperateIp("127.0.0.1"); // TODO:
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
+        after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
 
         updateWithChild(before, after);

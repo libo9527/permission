@@ -3,11 +3,13 @@ package com.mmall.service;
 import com.google.common.base.Preconditions;
 import com.mmall.beans.PageQuery;
 import com.mmall.beans.PageResult;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysAclMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysAcl;
 import com.mmall.param.AclParam;
 import com.mmall.util.BeanValidator;
+import com.mmall.util.IpUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,8 +46,8 @@ public class SysAclService {
                 .remark(param.getRemark())
                 .build();
         acl.setCode(generateCode());
-        acl.setOperator("system"); // TODO:
-        acl.setOperateIp("127.0.0.1"); // TODO:
+        acl.setOperator(RequestHolder.getCurrentUser().getUsername());
+        acl.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         acl.setOperateTime(new Date());
         sysAclMapper.insertSelective(acl);
         sysLogService.saveAclLog(null, acl);
@@ -61,8 +63,8 @@ public class SysAclService {
 
         SysAcl after = SysAcl.builder().id(param.getId()).name(param.getName()).aclModuleId(param.getAclModuleId()).url(param.getUrl())
                 .type(param.getType()).status(param.getStatus()).seq(param.getSeq()).remark(param.getRemark()).build();
-        after.setOperator("system"); // TODO:
-        after.setOperateIp("127.0.0.1"); // TODO:
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
+        after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
 
         sysAclMapper.updateByPrimaryKeySelective(after);

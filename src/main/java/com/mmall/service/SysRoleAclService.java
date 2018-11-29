@@ -3,10 +3,12 @@ package com.mmall.service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mmall.beans.LogType;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysLogMapper;
 import com.mmall.dao.SysRoleAclMapper;
 import com.mmall.model.SysLogWithBLOBs;
 import com.mmall.model.SysRoleAcl;
+import com.mmall.util.IpUtil;
 import com.mmall.util.JsonMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -52,8 +54,8 @@ public class SysRoleAclService {
             SysRoleAcl roleAcl = SysRoleAcl.builder()
                     .roleId(roleId)
                     .aclId(aclId)
-                    .operator("system") //TODO
-                    .operateIp("127.0.0.1")
+                    .operator(RequestHolder.getCurrentUser().getUsername())
+                    .operateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()))
                     .operateTime(new Date())
                     .build();
             roleAclList.add(roleAcl);
@@ -67,8 +69,8 @@ public class SysRoleAclService {
         sysLog.setTargetId(roleId);
         sysLog.setOldValue(before == null ? "" : JsonMapper.obj2String(before));
         sysLog.setNewValue(after == null ? "" : JsonMapper.obj2String(after));
-        sysLog.setOperator("system"); //TODO
-        sysLog.setOperateIp("127.0.0.1");
+        sysLog.setOperator(RequestHolder.getCurrentUser().getUsername());
+        sysLog.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysLog.setOperateTime(new Date());
         sysLog.setStatus(1);
         sysLogMapper.insertSelective(sysLog);
